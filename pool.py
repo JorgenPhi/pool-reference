@@ -21,7 +21,7 @@ from chia.rpc.full_node_rpc_client import FullNodeRpcClient
 from chia.full_node.signage_point import SignagePoint
 from chia.types.end_of_slot_bundle import EndOfSubSlotBundle
 from chia.types.blockchain_format.sized_bytes import bytes32
-from chia.consensus.pot_iterations import calculate_iterations_quality, calculate_sp_interval_iters
+from chia.consensus.pot_iterations import calculate_iterations_quality
 from chia.util.lru_cache import LRUCache
 from chia.wallet.puzzles.load_clvm import load_clvm
 from chia.wallet.transaction_record import TransactionRecord
@@ -596,7 +596,8 @@ class Pool:
         if not valid_sig:
             return {
                 "error_code": PoolErr.INVALID_SIGNATURE,
-                "error_message": f"The aggregate signature is invalid {partial.rewards_and_partial_aggregate_signature}",
+                "error_message": f"The aggregate signature is invalid \
+                    {partial.rewards_and_partial_aggregate_signature}",
                 "points_balance": balance,
                 "difficulty": curr_difficulty,
             }

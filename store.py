@@ -67,7 +67,7 @@ class PoolStore:
 
     async def add_farmer_record(self, farmer_record: FarmerRecord):
         cursor = await self.connection.execute(
-            f"INSERT OR REPLACE INTO farmer VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT OR REPLACE INTO farmer VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             (
                 farmer_record.singleton_genesis.hex(),
                 bytes(farmer_record.owner_public_key).hex(),
@@ -142,7 +142,7 @@ class PoolStore:
         return records
 
     async def get_farmer_points_and_ph(self) -> List[Tuple[uint64, bytes32]]:
-        cursor = await self.connection.execute(f"SELECT points, rewards_target from farmer")
+        cursor = await self.connection.execute("SELECT points, rewards_target from farmer")
         rows = await cursor.fetchall()
         accumulated: Dict[bytes32, uint64] = {}
         for row in rows:
@@ -159,5 +159,5 @@ class PoolStore:
         return ret
 
     async def clear_farmer_points(self) -> List[Tuple[uint64, bytes32]]:
-        cursor = await self.connection.execute(f"UPDATE farmer set points=0")
+        cursor = await self.connection.execute("UPDATE farmer set points=0")
         await cursor.fetchall()
